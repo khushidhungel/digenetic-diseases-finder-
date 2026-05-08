@@ -262,5 +262,3 @@ elif "Pipeline" in page:
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-title">Digenic Score Formula</div>', unsafe_allow_html=True)
     st.code("DS = (string_conf × pLI_A × pLI_B × pathway_overlap × clinvar_pair)\n ÷ (AF_A × AF_B × 1e6)\n\nNormalized to 0–100 | Inspired by DiVaS algorithm", language="text")
-
-
