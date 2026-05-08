@@ -12,7 +12,7 @@ import os
 import plotly.graph_objects as go
 import plotly.express as px
 
-st.set_page_config(page_title="BBS Digenic Explorer", page_icon="🧬", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="BBS Digenic Explorer", page_icon="🧬", layout="wide", initial_sidebar_state="auto")
 
 st.markdown("""
 <style>
@@ -33,7 +33,9 @@ section[data-testid="stSidebar"] .stRadio, section[data-testid="stSidebar"] .stR
 [data-baseweb="tab"]{background:transparent !important;color:var(--text) !important;font-weight:700 !important;border-radius:10px !important;}
 [data-baseweb="tab"][aria-selected="true"]{background:#111827 !important;color:var(--accent1) !important;}
 .stRadio [class*="label"]{color:var(--text) !important;}
-#MainMenu{visibility:hidden;}footer{visibility:hidden;}header{visibility:hidden;}
+#MainMenu{visibility:hidden;}footer{visibility:hidden;}
+header{visibility:hidden;}
+[data-testid="collapsedControl"]{visibility:visible !important;display:flex !important;}
 </style>
 """, unsafe_allow_html=True)
 
