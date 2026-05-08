@@ -225,7 +225,7 @@ elif "Pipeline" in page:
         st.markdown(f"<div class='card' style='display:flex;align-items:center;gap:16px;padding:0.9rem 1.2rem;margin-bottom:0.5rem;border-left:3px solid {color};'><div style='font-family:Space Mono,monospace;font-size:1rem;color:{color};font-weight:700;min-width:32px;'>L{num}</div><div style='flex:1;'><div style='font-size:0.9rem;color:#e2e8f0;font-weight:500;'>{name}</div><div style='font-size:0.75rem;color:#64748b;margin-top:2px;'>{source}</div></div><div style='font-size:1.2rem;'>{exists}</div></div>", unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-title">Digenic Score Formula</div>', unsafe_allow_html=True)
-    st.code("DS = (string_conf × pLI_A × pLI_B × pathway_overlap × clinvar_pair)
+    st.code("""DS = (string_conf × pLI_A × pLI_B × pathway_overlap × clinvar_pair)
      ÷ (AF_A × AF_B × 1e6)
 
-Normalized to 0–100  |  Inspired by DiVaS algorithm", language="text")
+Normalized to 0–100  |  Inspired by DiVaS algorithm""", language="text")
