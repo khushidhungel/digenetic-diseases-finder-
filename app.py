@@ -195,12 +195,10 @@ elif "AI" in page:
     if ai_text:
         sections=[s.strip() for s in ai_text.split("="*55) if s.strip() and "RANK" in s]
         for section in sections:
-            lines = section.strip().split("
-")
+            lines = section.strip().split("\n")
             title = next((l for l in lines if "RANK" in l), "")
             score_ln = next((l for l in lines if "Digenic Score" in l), "")
-            content = "
-".join(lines[3:]).strip()
+            content = "\n".join(lines[3:]).strip()
             score_val=0
             try: score_val=float(score_ln.split(":")[1].strip().split("/")[0])
             except: pass
