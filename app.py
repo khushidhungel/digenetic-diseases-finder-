@@ -11,10 +11,16 @@ import os
 import plotly.graph_objects as go
 import plotly.express as px
 
-st.set_page_config(page_title="BBS Digenic Explorer", page_icon="🧬", layout="wide", initial_sidebar_state="auto")
+st.set_page_config(page_title="BBS Digenic Explorer", page_icon="🧬", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""
 <style>
+[data-testid="stSidebar"] {
+    min-width: 260px;
+    max-width: 260px;
+}
+</style>
+""", unsafe_allow_html=True)
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
 :root{--bg:#0a0e1a;--bg2:#0d1f3c;--bg3:#1a2235;--accent1:#00f5c4;--accent2:#6366f1;--accent3:#f59e0b;--accent4:#ef4444;--text:#f8fafc;--text2:#cbd5e1;--border:rgba(255,255,255,0.12);}
 html,body,[class*="css"]{font-family:'DM Sans',sans-serif;background-color:var(--bg)!important;color:var(--text)!important;}
