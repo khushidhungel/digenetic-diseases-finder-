@@ -1,0 +1,10 @@
+gene_symbol,gene_name,ensembl_id,ot_score,pLI,loeuf,passes_filter
+BBS1,Bardet-Biedl syndrome 1,ENSG00000174483,0.95,0.998,0.12,True
+BBS2,Bardet-Biedl syndrome 2,ENSG00000125124,0.92,0.997,0.15,True
+BBS4,Bardet-Biedl syndrome 4,ENSG00000140463,0.9,0.996,0.11,True
+BBS7,Bardet-Biedl syndrome 7,ENSG00000138686,0.88,0.995,0.14,True
+BBS9,Bardet-Biedl syndrome 9,ENSG00000122585,0.85,0.994,0.13,True
+BBS10,Bardet-Biedl syndrome 10,ENSG00000179941,0.83,0.999,0.1,True
+MKKS,McKusick-Kaufman syndrome,ENSG00000125863,0.8,0.991,0.18,True
+CEP290,Centrosomal protein 290,ENSG00000198707,0.75,1.0,0.08,True
+ARL6,ADP ribosylation factor 6,ENSG00000113966,0.72,0.923,0.22,True

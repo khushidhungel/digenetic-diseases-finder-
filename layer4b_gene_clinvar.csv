@@ -1,0 +1,10 @@
+gene_symbol,clinvar_score,clinvar_status,variant_count
+BBS1,1.0,Pathogenic — strong evidence,324
+BBS2,1.0,Pathogenic — strong evidence,341
+BBS4,1.0,Pathogenic — strong evidence,248
+BBS7,1.0,Pathogenic — strong evidence,195
+BBS9,1.0,Pathogenic — strong evidence,236
+BBS10,1.0,Pathogenic — strong evidence,331
+MKKS,1.0,Pathogenic — strong evidence,203
+CEP290,1.0,Pathogenic — strong evidence,1175
+ARL6,1.0,Pathogenic — strong evidence,84

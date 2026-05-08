@@ -1,0 +1,11 @@
+gene_symbol,gene_name,ensembl_id,ot_score,evidence_types
+BBS1,Bardet-Biedl syndrome 1,ENSG00000174483,0.95,genetic_association
+BBS2,Bardet-Biedl syndrome 2,ENSG00000125124,0.92,genetic_association
+BBS4,Bardet-Biedl syndrome 4,ENSG00000140463,0.9,genetic_association
+BBS7,Bardet-Biedl syndrome 7,ENSG00000138686,0.88,genetic_association
+BBS9,Bardet-Biedl syndrome 9,ENSG00000122585,0.85,genetic_association
+BBS10,Bardet-Biedl syndrome 10,ENSG00000179941,0.83,genetic_association
+MKKS,McKusick-Kaufman syndrome,ENSG00000125863,0.8,genetic_association
+CEP290,Centrosomal protein 290,ENSG00000198707,0.75,"genetic_association, literature"
+ARL6,ADP ribosylation factor 6,ENSG00000113966,0.72,genetic_association
+TRIM32,Tripartite motif 32,ENSG00000119401,0.65,"genetic_association, literature"
