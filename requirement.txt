@@ -1,9 +1,1 @@
-streamlit
-pandas
-networkx
-plotly
-requests
-python-dotenv
-google-generativeai
-seaborn
-matplotlib
+
