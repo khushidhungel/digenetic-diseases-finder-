@@ -15,32 +15,128 @@ st.set_page_config(page_title="BBS Digenic Explorer", page_icon="🧬", layout="
 
 st.markdown("""
 <style>
-[data-testid="stSidebar"] {
-    min-width: 260px;
-    max-width: 260px;
-}
-</style>
-""", unsafe_allow_html=True)
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
-:root{--bg:#0a0e1a;--bg2:#0d1f3c;--bg3:#1a2235;--accent1:#00f5c4;--accent2:#6366f1;--accent3:#f59e0b;--accent4:#ef4444;--text:#f8fafc;--text2:#cbd5e1;--border:rgba(255,255,255,0.12);}
-html,body,[class*="css"]{font-family:'DM Sans',sans-serif;background-color:var(--bg)!important;color:var(--text)!important;}
-.stApp{background-color:var(--bg)!important;}
-section[data-testid="stSidebar"]{background:#0d1f3c !important;border-right:2px solid #00f5c4 !important;}
-section[data-testid="stSidebar"] label, section[data-testid="stSidebar"] div, section[data-testid="stSidebar"] span, section[data-testid="stSidebar"] button { color: var(--text) !important; }
-section[data-testid="stSidebar"] .stRadio, section[data-testid="stSidebar"] .stRadio label, section[data-testid="stSidebar"] .stRadio span { color: var(--text) !important; font-weight: 700 !important; }
-.metric-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;}
-.metric-value{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:var(--accent1);line-height:1;}
-.metric-label{font-size:0.75rem;color:var(--text);letter-spacing:0.05em;text-transform:uppercase;}
-.hero-title{font-family:'Space Mono',monospace;font-size:2.4rem;font-weight:800;color:#ffffff;line-height:1.1;}
-.section-title{font-family:'Space Mono',monospace;font-size:1rem;color:#ffffff;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:0.75rem;}
-.card{background:var(--bg3);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1rem;}
-[data-baseweb="tab-list"]{background:var(--bg2)!important;border-radius:12px;padding:4px;}
-[data-baseweb="tab"]{background:transparent !important;color:var(--text) !important;font-weight:700 !important;border-radius:10px !important;}
-[data-baseweb="tab"][aria-selected="true"]{background:#111827 !important;color:var(--accent1) !important;}
-.stRadio [class*="label"]{color:var(--text) !important;}
-#MainMenu{visibility:hidden;}footer{visibility:hidden;}
-header{visibility:hidden;}
-[data-testid="collapsedControl"]{visibility:visible !important;display:flex !important;}
+
+:root{
+    --bg:#0a0e1a;
+    --bg2:#0d1f3c;
+    --bg3:#1a2235;
+    --accent1:#00f5c4;
+    --accent2:#6366f1;
+    --accent3:#f59e0b;
+    --accent4:#ef4444;
+    --text:#f8fafc;
+    --text2:#cbd5e1;
+    --border:rgba(255,255,255,0.12);
+}
+
+/* MAIN APP */
+html,body,[class*="css"]{
+    font-family:'DM Sans',sans-serif;
+    background-color:var(--bg)!important;
+    color:var(--text)!important;
+}
+
+.stApp{
+    background-color:var(--bg)!important;
+}
+
+/* SIDEBAR */
+section[data-testid="stSidebar"]{
+    background:#0d1f3c !important;
+    border-right:2px solid #00f5c4 !important;
+    min-width:260px !important;
+    max-width:260px !important;
+}
+
+/* Sidebar text fix */
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] div,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] button {
+    color: var(--text) !important;
+}
+
+/* Cards */
+.metric-box{
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:1rem;
+    text-align:center;
+}
+
+.metric-value{
+    font-family:'Space Mono',monospace;
+    font-size:2rem;
+    font-weight:700;
+    color:var(--accent1);
+    line-height:1;
+}
+
+.metric-label{
+    font-size:0.75rem;
+    color:var(--text2);
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+}
+
+.card{
+    background:var(--bg3);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px;
+    padding:1.2rem 1.5rem;
+    margin-bottom:1rem;
+}
+
+/* Titles */
+.hero-title{
+    font-family:'Space Mono',monospace;
+    font-size:2.4rem;
+    font-weight:800;
+    color:#ffffff;
+    line-height:1.1;
+}
+
+.section-title{
+    font-family:'Space Mono',monospace;
+    font-size:1rem;
+    color:#ffffff;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    margin-bottom:0.75rem;
+}
+
+/* Tabs */
+[data-baseweb="tab-list"]{
+    background:var(--bg2)!important;
+    border-radius:12px;
+    padding:4px;
+}
+
+[data-baseweb="tab"]{
+    background:transparent !important;
+    color:var(--text) !important;
+    font-weight:700 !important;
+    border-radius:10px !important;
+}
+
+[data-baseweb="tab"][aria-selected="true"]{
+    background:#111827 !important;
+    color:var(--accent1) !important;
+}
+
+/* Hide Streamlit UI */
+#MainMenu, footer, header{
+    visibility:hidden;
+}
+
+/* Sidebar collapse button */
+[data-testid="collapsedControl"]{
+    visibility:visible !important;
+    display:flex !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
