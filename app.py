@@ -1,4 +1,3 @@
-
 """
 BBS Digenic Variant Explorer — Interactive Streamlit App
 =========================================================
@@ -17,10 +16,10 @@ st.set_page_config(page_title="BBS Digenic Explorer", page_icon="🧬", layout="
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
-:root{--bg:#0a0e1a;--bg2:#111827;--bg3:#1a2235;--accent1:#00f5c4;--accent2:#6366f1;--accent3:#f59e0b;--accent4:#ef4444;--text:#f8fafc;--text2:#cbd5e1;--border:rgba(255,255,255,0.12);}
+:root{--bg:#0a0e1a;--bg2:#0d1f3c;--bg3:#1a2235;--accent1:#00f5c4;--accent2:#6366f1;--accent3:#f59e0b;--accent4:#ef4444;--text:#f8fafc;--text2:#cbd5e1;--border:rgba(255,255,255,0.12);}
 html,body,[class*="css"]{font-family:'DM Sans',sans-serif;background-color:var(--bg)!important;color:var(--text)!important;}
 .stApp{background-color:var(--bg)!important;}
-section[data-testid="stSidebar"]{background:var(--bg2)!important;border-right:1px solid var(--border);}
+section[data-testid="stSidebar"]{background:#0d1f3c !important;border-right:2px solid #00f5c4 !important;}
 section[data-testid="stSidebar"] label, section[data-testid="stSidebar"] div, section[data-testid="stSidebar"] span, section[data-testid="stSidebar"] button { color: var(--text) !important; }
 section[data-testid="stSidebar"] .stRadio, section[data-testid="stSidebar"] .stRadio label, section[data-testid="stSidebar"] .stRadio span { color: var(--text) !important; font-weight: 700 !important; }
 .metric-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;}
@@ -196,7 +195,9 @@ elif "AI" in page:
     if ai_text:
         sections=[s.strip() for s in ai_text.split("="*55) if s.strip() and "RANK" in s]
         for section in sections:
-            lines=section.strip().split("\n"); title=next((l for l in lines if "RANK" in l),""); score_ln=next((l for l in lines if "Digenic Score" in l),""); content="\n".join(lines[3:]).strip()
+            lines=section.strip().split("
+"); title=next((l for l in lines if "RANK" in l),""); score_ln=next((l for l in lines if "Digenic Score" in l),""); content="
+".join(lines[3:]).strip()
             score_val=0
             try: score_val=float(score_ln.split(":")[1].strip().split("/")[0])
             except: pass
@@ -223,4 +224,8 @@ elif "Pipeline" in page:
         st.markdown(f"<div class='card' style='display:flex;align-items:center;gap:16px;padding:0.9rem 1.2rem;margin-bottom:0.5rem;border-left:3px solid {color};'><div style='font-family:Space Mono,monospace;font-size:1rem;color:{color};font-weight:700;min-width:32px;'>L{num}</div><div style='flex:1;'><div style='font-size:0.9rem;color:#e2e8f0;font-weight:500;'>{name}</div><div style='font-size:0.75rem;color:#64748b;margin-top:2px;'>{source}</div></div><div style='font-size:1.2rem;'>{exists}</div></div>", unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-title">Digenic Score Formula</div>', unsafe_allow_html=True)
-    st.code("DS = (string_conf × pLI_A × pLI_B × pathway_overlap × clinvar_pair)\n     ÷ (AF_A × AF_B × 1e6)\n\nNormalized to 0–100  |  Inspired by DiVaS algorithm", language="text")
+    st.code("DS = (string_conf × pLI_A × pLI_B × pathway_overlap × clinvar_pair)
+     ÷ (AF_A × AF_B × 1e6)
+
+Normalized to 0–100  |  Inspired by DiVaS algorithm", language="text")
+
