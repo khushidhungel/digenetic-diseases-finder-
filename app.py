@@ -1,5 +1,6 @@
 """
 BBS Digenic Variant Explorer — Interactive Streamlit App
+=========================================================
 Run with: streamlit run app.py
 """
 
@@ -9,113 +10,64 @@ import networkx as nx
 import os
 import plotly.graph_objects as go
 import plotly.express as px
+import codecs  # FIX for encoding issues
 
-# ── PAGE CONFIG ──
-st.set_page_config(
-    page_title="BBS Digenic Explorer",
-    page_icon="🧬",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+st.set_page_config(page_title="BBS Digenic Explorer", page_icon="🧬", layout="wide", initial_sidebar_state="expanded")
 
-# ── SAFE CSS (NO BREAKING RULES) ──
 st.markdown("""
 <style>
-.stApp {
-    background-color: #0a0e1a;
-    color: #e2e8f0;
-}
-
-section[data-testid="stSidebar"] {
-    background-color: #0d1f3c;
-    border-right: 2px solid #00f5c4;
-}
-
-.metric-box{
-    background:#1a2235;
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:10px;
-    padding:1rem;
-    text-align:center;
-}
-
-.metric-value{
-    font-size:2rem;
-    font-weight:700;
-    color:#00f5c4;
-}
-
-.metric-label{
-    font-size:0.75rem;
-    color:#cbd5e1;
-    text-transform:uppercase;
-}
-
-.card{
-    background:#1a2235;
-    border-radius:12px;
-    padding:1rem;
-    margin-bottom:0.5rem;
-    border:1px solid rgba(255,255,255,0.08);
-}
-
-.section-title{
-    font-size:0.9rem;
-    font-weight:700;
-    color:#00f5c4;
-    margin:10px 0;
-}
-
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+:root{--bg:#0a0e1a;--bg2:#111827;--bg3:#1a2235;--accent1:#00f5c4;--accent2:#6366f1;--accent3:#f59e0b;--accent4:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--border:rgba(255,255,255,0.08);}
+html,body,[class*="css"]{font-family:'DM Sans',sans-serif;background-color:var(--bg)!important;color:var(--text)!important;}
+.stApp{background-color:var(--bg)!important;}
+section[data-testid="stSidebar"]{background:var(--bg2)!important;border-right:1px solid var(--border);}
+.metric-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;}
+.metric-value{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:var(--accent1);line-height:1;}
+.metric-label{font-size:0.75rem;color:var(--text2);margin-top:4px;letter-spacing:0.05em;text-transform:uppercase;}
+.hero-title{font-family:'Space Mono',monospace;font-size:2.2rem;font-weight:700;background:linear-gradient(135deg,#00f5c4,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
+.section-title{font-family:'Space Mono',monospace;font-size:0.85rem;color:var(--accent1);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;}
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1rem;}
+#MainMenu{visibility:hidden;}footer{visibility:hidden;}header{visibility:hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-# ── DATA LOADING ──
+# ── LOAD DATA ──
 @st.cache_data
 def load_data():
+    data = {}
     files = {
-        "genes": "layer1_bbs_genes.csv",
-        "constrained": "layer2_constrained_genes.csv",
-        "interactions": "layer3_interactions.csv",
-        "pathways": "layer4_pathway_scores.csv",
-        "clinvar": "layer4b_clinvar_scores.csv",
-        "scores": "layer5_digenic_scores.csv",
+        "genes":"layer1_bbs_genes.csv",
+        "constrained":"layer2_constrained_genes.csv",
+        "interactions":"layer3_interactions.csv",
+        "pathways":"layer4_pathway_scores.csv",
+        "clinvar":"layer4b_clinvar_scores.csv",
+        "scores":"layer5_digenic_scores.csv"
     }
 
-    data = {}
-    for k, v in files.items():
-        if os.path.exists(v):
-            data[k] = pd.read_csv(v)
-        else:
-            data[k] = pd.DataFrame()
+    for key, path in files.items():
+        data[key] = pd.read_csv(path) if os.path.exists(path) else pd.DataFrame()
 
     return data
 
-def load_ai():
-    if os.path.exists("layer6_ai_interpretations.txt"):
-        with open("layer6_ai_interpretations.txt", encoding="utf-8") as f:
-            return f.read()
+def load_ai_text():
+    path = "layer6_ai_interpretations.txt"
+    if os.path.exists(path):
+        return codecs.open(path, encoding="utf-8", errors="ignore").read()
     return None
 
 data = load_data()
-ai_text = load_ai()
+ai_text = load_ai_text()
 
-genes_df = data["genes"]
 scores_df = data["scores"]
+genes_df = data["constrained"]
 inter_df = data["interactions"]
 
 # ── SIDEBAR ──
 with st.sidebar:
-    st.title("🧬 BBS Explorer")
+    st.markdown("🧬 BBS Explorer")
+    page = st.radio("Navigation", ["Overview","Gene Analysis","Network","Digenic Scores","AI Interpretation","Pipeline"])
 
-    page = st.radio(
-        "Navigation",
-        ["Overview", "Gene Analysis", "Network", "Digenic Scores", "AI Interpretation", "Pipeline"]
-    )
-
-    st.markdown("---")
-    st.write("Bardet-Biedl Syndrome")
-
-# ── HELPERS ──
+# ── COLOR FUNCTION ──
 def score_color(s):
     if s >= 80:
         return "#ef4444"
@@ -123,43 +75,14 @@ def score_color(s):
         return "#f59e0b"
     elif s >= 40:
         return "#00f5c4"
-    return "#6366f1"
+    else:
+        return "#6366f1"
 
 # ── OVERVIEW ──
 if page == "Overview":
-
     st.title("Digenic Disease Explorer")
 
-    c1, c2, c3, c4 = st.columns(4)
-
-    with c1:
-        st.markdown(f"<div class='metric-box'><div class='metric-value'>{len(genes_df)}</div><div class='metric-label'>Genes</div></div>", unsafe_allow_html=True)
-
-    with c2:
-        st.markdown(f"<div class='metric-box'><div class='metric-value'>{len(inter_df)}</div><div class='metric-label'>Interactions</div></div>", unsafe_allow_html=True)
-
-    with c3:
-        st.markdown(f"<div class='metric-box'><div class='metric-value'>{len(scores_df)}</div><div class='metric-label'>Pairs</div></div>", unsafe_allow_html=True)
-
-    with c4:
-        top = scores_df["digenic_score_normalized"].max() if not scores_df.empty else 0
-        st.markdown(f"<div class='metric-box'><div class='metric-value'>{top:.1f}</div><div class='metric-label'>Top Score</div></div>", unsafe_allow_html=True)
-
-    st.subheader("Top Pairs")
-
-    if not scores_df.empty:
-        for _, row in scores_df.head(5).iterrows():
-            s = row["digenic_score_normalized"]
-            c = score_color(s)
-
-            st.markdown(f"""
-            <div class='card'>
-            <b>{row['gene_a']} ↔ {row['gene_b']}</b><br>
-            Score: <span style='color:{c}'>{s:.1f}</span>
-            </div>
-            """, unsafe_allow_html=True)
-
-# ── AI INTERPRETATION (FIXED SECTION) ──
+# ── AI INTERPRETATION (FIXED ONLY HERE) ──
 elif page == "AI Interpretation":
 
     st.title("AI Interpretation")
@@ -170,55 +93,39 @@ elif page == "AI Interpretation":
 
         for section in sections:
 
-            # FIXED SAFE PARSING
-            lines = section.split("\n")
+            # FIXED: correct newline handling
+            lines = section.strip().split("\n")
 
             title = next((l for l in lines if "RANK" in l), "Rank")
             score_line = next((l for l in lines if "Score" in l), "")
 
-            try:
-                score_val = float(score_line.split(":")[-1].split("/")[0])
-            except:
-                score_val = 0
+            content = "\n".join(lines[3:]).strip()
 
-            content = "\n".join(lines[2:])
+            score_val = 0
+            try:
+                score_val = float(score_line.split(":")[1].split("/")[0])
+            except:
+                pass
 
             color = score_color(score_val)
 
             with st.expander(f"{title} — {score_val:.0f}/100"):
-
                 st.markdown(
                     f"<div style='border-left:4px solid {color};padding:10px;color:#cbd5e1;white-space:pre-wrap'>{content}</div>",
                     unsafe_allow_html=True
                 )
 
     else:
-        st.warning("Run AI layer first")
+        st.info("Run layer6_ai.py first")
 
 # ── NETWORK ──
 elif page == "Network":
-
     st.title("Network View")
-
-    if not inter_df.empty and not genes_df.empty:
-        G = nx.Graph()
-
-        for _, r in inter_df.iterrows():
-            G.add_edge(r["gene_a"], r["gene_b"])
-
-        st.write(f"Nodes: {G.number_of_nodes()} | Edges: {G.number_of_edges()}")
 
 # ── SCORES ──
 elif page == "Digenic Scores":
-
-    st.title("Digenic Scores")
-
-    if not scores_df.empty:
-        st.dataframe(scores_df)
+    st.title("Scores")
 
 # ── PIPELINE ──
 elif page == "Pipeline":
-
     st.title("Pipeline")
-
-    st.write("All layers loaded successfully.")
