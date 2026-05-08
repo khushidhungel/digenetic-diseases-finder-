@@ -75,7 +75,7 @@ inter_df  = data["interactions"]
 with st.sidebar:
     st.markdown("<div style='padding:1rem 0;'><div style='font-family:Space Mono,monospace;font-size:1.1rem;color:#00f5c4;font-weight:700;'>🧬 BBS Explorer</div><div style='font-size:0.75rem;color:#94a3b8;margin-top:4px;'>Digenic Variant Architecture</div></div>", unsafe_allow_html=True)
     st.markdown("---")
-    page = st.radio("", ["🏠  Overview","🔬  Gene Analysis","🕸️  Network","📊  Digenic Scores","🤖  AI Interpretation","⚙️  Pipeline"], label_visibility="collapsed")
+    page = st.radio("Navigation", ["🏠 Overview","🔬 Gene Analysis","🕸️ Network","📊 Digenic Scores","🤖 AI Interpretation","⚙️ Pipeline"])
     st.markdown("---")
     st.markdown("<div class='card' style='padding:0.8rem;'><div style='font-size:0.7rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;'>Disease</div><div style='font-size:0.9rem;color:#e2e8f0;font-weight:500;'>Bardet-Biedl Syndrome</div><div style='font-size:0.75rem;color:#6366f1;margin-top:4px;'>MONDO:0015229</div></div>", unsafe_allow_html=True)
     st.markdown("<div style='font-size:0.7rem;color:#475569;text-align:center;margin-top:1rem;'>Biohackathon 2026 · KU Bioinformatics</div>", unsafe_allow_html=True)
